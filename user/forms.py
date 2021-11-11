@@ -1,4 +1,3 @@
-import email
 from django import forms
 from user.models import User
 
@@ -18,7 +17,7 @@ class RegistrationForm(forms.ModelForm):
         return username
 
     def clean_email(self):
-        username = self.cleaned_data.get('email')
+        email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Пользователь с данной почтой уже существует')
         return email

@@ -8,7 +8,7 @@ from .models import *
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'economy': 'economy', 'politics': 'politics', 'fashion': 'fashion', 'showbusiness': 'showbusiness'})
 
 
 def blog_category_detail(request, slug):
