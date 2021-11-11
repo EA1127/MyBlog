@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main -->
+	<div id="main" style="background-color: aliceblue; padding-top: 20px;">
+		<div class="inner">
+
+			<header>
+				<h1 style="color:darkslateblue;">{{ new.title }}</h1>
+			</header>
+			<span>
+				<img src="{{ new.get_image }}" style="width: 745px; height: 600px;" alt="" />
+			</span>
+			<section>
+				<article>
+					{% for image in images %}
+					<p><img src="{{ image }}" class="img-thumbnail" style="width: 605px; height: 400px; margin-left: 55%;" alt="" /></p>
+					{% endfor %}
+					<h2>{{new.category.name}}</h2>
+					<div class="content">
+						<p>{{ new.created }}</p>
+						<p>{{ new.user }}</p>
+						<p>{{ new.content }}</p>
+					</div>
+					<a href="{% url 'update-news' new.id %}"><i class="fas fa-pencil-alt fa-2x fa-border"></i></a>
+					<a href="{% url 'delete-news' new.id %}"><i class="fas fa-trash-alt fa-2x fa-border"></i></a>
+				</article>
+			</section>
+		</div>
+	</div>
+
+{% endblock %}
