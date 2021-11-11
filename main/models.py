@@ -1,20 +1,25 @@
-
 from django.db import models
 
-# from user.models import User
+from user.models import User
 
 
 class Category(models.Model):
     slug = models.SlugField(primary_key=True, max_length=50)
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to='categories', blank=True, null=True)
-    parent = models.ForeignKey('self', related_name='children', null=True, blank=True, on_delete=models.CASCADE)
-    # children для того, чтобы можно было вытащить все подкатегории какой-нибудь категории
+    parent = models.ForeignKey('self', related_name='subcategories', null=True, blank=True, on_delete=models.CASCADE)
+    # subcategories для того, чтобы можно было вытащить все подкатегории какой-нибудь категории
 
     def __str__(self):
         if self.parent:
             return f'{self.parent} -> {self.name}'
         return self.name
+
+    @property
+    def get_subcategories(self):
+        if self.subcategories:
+            return self.subcategories.all()
+        return False
 
 
 class News(models.Model):
@@ -27,18 +32,18 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
-    # @property
-    # def get_image(self):
-    #     return self.images.first()
-    #
-    # def get_absolute_url(self):
-    #     from django.urls import reverse
-    #     return reverse('detail', kwargs={'pk': self.pk})
+    @property
+    def get_image(self):
+        return self.images.first()
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('detail', kwargs={'pk': self.pk})
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='recipes')
-    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='news')
+    new = models.ForeignKey(News, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):
         if self.image:

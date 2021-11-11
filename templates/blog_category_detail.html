@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Main -->
+	<div id="main">
+		<div class="inner">
+			<h1 style="color:darkslateblue">{{ category.name }}</h1>
+			<div style="display: flex; justify-content: space-between">
+				<div style="margin-right: 50px;"><span class="image"><img src="{{ category.image.url }}" style="width: 605px; height: 400px;" alt=""/></span></div>
+			</div>
+			{% if category.get_subcategories %}
+			{% for subcategory in category.get_subcategories %}
+				<a href="{% url 'category' subcategory.slug %}"><li style="font-weight: bold; color: dodgerblue;">{{ subcategory.name }}</li></a>
+			{% endfor %}
+			{% endif %}
+
+			{% if not category.get_subcategories %}
+			{% for new in news %}
+			<article style="margin-top: 10%;">
+				<h3 style="color: midnightblue;">{{ new }}</h3>
+				<span class="image"><img src="{{ new.get_image }}" style="width: 605px; height: 400px; margin-left:100%;" alt=""/></span>
+				<p>{{ new.content|truncatewords:50 }}</p>
+				<a href="{% url 'detail' new.id %}" class="button">More</a>
+			</article>
+			{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+
+{% endblock %}

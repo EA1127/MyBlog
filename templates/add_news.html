@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form style="margin-left: 50px; margin-right: 100px" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ news_form.as_p }}
+    {{ formset.management_form }}
+    {% for form in formset %}
+    {{ form }}
+    {% endfor %}
+
+    <input class="btn btn-secondary" type="submit" value="Submit">
+</form>
+
+{% endblock %}

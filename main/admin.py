@@ -1,3 +1,19 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+
+class ImageInlineAdmin(admin.TabularInline):
+    model = Image
+    fields = ('image', )
+    max_num = 6
+
+
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    inlines = [ImageInlineAdmin, ]
+
+
+admin.site.register(Category)
+
+
