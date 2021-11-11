@@ -11,7 +11,7 @@
 	</head>
 
 	{% if messages %}
-		<ul class="messages">
+		<ul class="messages" style="margin-left:400px; margin-right:400px;">
 			{% for message in messages %}
 			<div class="alert alert-info" role="alert">{{ message }}</div>
 			{% endfor %}
@@ -30,9 +30,12 @@
 								<a href="{% url 'home' %}" class="logo">
 									<span class="symbol"><img src="{% static 'images/logo.svg' %}" alt="" /></span><span class="title">MY BLOG</span>
 								</a>
-
-							<a style="margin-left:70%;" href="{% url 'register' %}"> Зарегистрироваться </a>
-
+							{% if not request.user.is_authenticated%}
+							<a style="margin-left:60%;" href="{% url 'register' %}"> Зарегистрироваться </a>
+							<a style="margin-left:65px;" href="{% url 'login' %}"> Войти </a>
+							{% else %}
+							<a style="margin-left:80%;" href="{% url 'logout' %}"> Выйти </a>
+							{% endif %}
 							<!-- Nav -->
 								<nav>
 									<ul>
@@ -48,7 +51,9 @@
 						<h2>Menu</h2>
 						<ul>
 							<li><a href="{% url 'home' %}">HOMEPAGE</a></li>
-							<li><a href="generic.html">MY PROFILE</a></li>
+							{% if request.user.is_authenticated %}
+							<li><a href="{% url 'profile'%}">MY PROFILE</a></li>
+							{% endif %}
 							<li>
 								<span>NEWS MENU</span>
 								<ul>
