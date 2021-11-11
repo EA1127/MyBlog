@@ -15,5 +15,5 @@ class NewsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Category)
-
+admin.site.register(User)
 
