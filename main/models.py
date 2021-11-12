@@ -28,6 +28,7 @@ class News(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='news')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='news')
     created = models.DateTimeField()
+    favorites = models.ManyToManyField(User, related_name='favorites', blank=True)
 
     def __str__(self):
         return self.title

@@ -53,6 +53,8 @@
 							<li><a href="{% url 'home' %}">HOMEPAGE</a></li>
 							{% if request.user.is_authenticated %}
 							<li><a href="{% url 'profile'%}">MY PROFILE</a></li>
+							<li><a href="{% url 'favorite_posts_list' %}">MY FAVORITE POSTS</a></li>
+
 							{% endif %}
 							<li>
 								<span>NEWS MENU</span>
