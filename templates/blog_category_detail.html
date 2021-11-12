@@ -10,7 +10,7 @@
 			</div>
 			{% if category.get_subcategories %}
 			{% for subcategory in category.get_subcategories %}
-				<a href="{% url 'category' subcategory.slug %}"><li style="font-weight: bold; color: dodgerblue;">{{ subcategory.name }}</li></a>
+			<h2><a href="{% url 'category' subcategory.slug %}"><li style="font-weight: bold; color: dodgerblue;">{{ subcategory.name }}</li></a></h2>
 			{% endfor %}
 			{% endif %}
 
