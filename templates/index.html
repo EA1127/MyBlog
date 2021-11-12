@@ -63,9 +63,9 @@
 				</article>
 				<article class="style6">
 					<span class="image">
-						<img src="{% static 'images/pic11.jpg' %}" style="width: auto; height: 300px;" alt="" />
+						<img src="{% static 'images/5_itworld.jpg' %}" style="width: auto; height: 300px;" alt="" />
 					</span>
-					<a href="#">
+					<a href="{% url 'category' itworld %}">
 						<h2>It World</h2>
 						<div class="content">
 							<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
@@ -74,18 +74,28 @@
 				</article>
 				<article class="style4">
 					<span class="image">
-						<img src="{% static 'images/pic12.jpg' %}" style="width: auto; height: 300px;" alt="" />
+						<img src="{% static 'images/6_lifehacks.jpg' %}" style="width: auto; height: 300px;" alt="" />
 					</span>
-					<a href="#">
+					<a href="{% url 'category' lifehacks %}">
 						<h2>Lifehacks</h2>
 						<div class="content">
 							<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
 						</div>
 					</a>
 				</article>
-
 			</section>
 		</div>
 	</div>
+
+<div style="padding-left: 350px; padding-right: 350px;">
+	{% for new in news %}
+		<article style="margin-top: 10%;">
+			<h3 style="color: midnightblue;">{{ new }}</h3>
+			<span class="image"><img src="{{ new.get_image }}" style="width: 605px; height: 400px; margin-left:100%;" alt=""/></span>
+			<p>{{ new.content|truncatewords:30 }}</p>
+			<a href="{% url 'detail' new.id %}" class="button">More</a>
+		</article>
+	{% endfor %}
+</div>
 
 {% endblock %}
