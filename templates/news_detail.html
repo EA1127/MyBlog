@@ -37,19 +37,20 @@
 
 			{% with comments.count as total_comments %}
     	<h2 style="margin-top:25px; margin-left:190px; text-decoration: underline;">
-        {{ total_comments }} comment{{ total_comments|pluralize }}
+        {{ total_comments }} comment{{ total_comments|pluralize }}:
     	</h2>
 			{% endwith %}
 
 
 			{% for comment in comments %}
-    		<div class="comment" style="margin-left:100px;margin-right:300px;background-color:linen">
-        	<p class="info" style="font-weight:bold;margin-left:20px;">
+<!--    		<div class="comment" style="margin-left:100px;margin-right:300px;background-color:linen">-->
+			<ul class="list-group list-group-flush">
+        	<li class="list-group-item"><p class="info" style="font-weight:bold;margin-left:20px;margin-top:10px;margin-bottom:10px;">
             Comment {{ forloop.counter }} by {{ comment.name }}, posted on
             {{ comment.created }}
-        	</p>
-				<p>{{ comment.body|linebreaks }}</p>
-    		</div>
+        	</p></li>
+				<li class="list-group-item"><p style="margin-left:5%">{{ comment.body|linebreaks }}</p></li>
+<!--    		</div>-->
 			{% empty %}
     		<p style="margin-left:190px;">There are no comments yet.</p>
 			{% endfor %}
