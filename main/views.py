@@ -21,7 +21,7 @@ class MainPageView(ListView):
     model = News
     template_name = 'index.html'
     context_object_name = 'news'
-    paginate_by = 2
+    # paginate_by = 2
 
     def get_template_names(self):
         template_name = super(MainPageView, self).get_template_names()
@@ -38,9 +38,9 @@ class MainPageView(ListView):
         search = self.request.GET.get('q')
         filter_ = self.request.GET.get('filter')
         if search:
-            context['news'] = News.objects.filter(Q(title__icontains=search)|Q(description__icontains=search))
+            context['news'] = News.objects.filter(Q(title__icontains=search)|Q(content__icontains=search))
         elif filter_:
-            start_date = timezone.now() - timedelta(days=1)
+            start_date = timezone.now() - timedelta(hours=24)
             context['news'] = News.objects.filter(created__gte=start_date)
         else:
             context['news'] = News.objects.all()

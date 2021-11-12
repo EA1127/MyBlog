@@ -46,6 +46,14 @@
 						</div>
 					</header>
 
+				<!-- Search -->
+				  <div style="margin-left: 17%; margin-right: 17%;">
+						<form method="get" action="{% url 'search' %}">
+						  	<input type="text" name="q" id="query" placeholder="Search" />
+						</form>
+				  </div>
+
+
 				<!-- Menu -->
 					<nav id="menu">
 						<h2>Menu</h2>
@@ -63,7 +71,7 @@
 								</ul>
 							</li>
 							<li><a href="{% url 'add-news' %}">ADD TO MyBlog</a></li>
-							<li><a href="{% url 'home' %}?filter_=fresh">FRESH NEWS</a></li>
+							<li><a href="{% url 'search' %}?filter=fresh">FRESH NEWS</a></li>
 						</ul>
 					</nav>
 
