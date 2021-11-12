@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from django.db.models import Q
 from django.forms import modelformset_factory
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.utils import timezone
@@ -58,6 +58,11 @@ def news_detail(request, pk):
     image = new.get_image
     images = new.images.exclude(id=image.id)
     comments = new.comments.filter(active=True)
+    is_favorite = False
+
+    if new.favorites.filter(id=request.user.id).exists():
+        is_favorite = True
+
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
@@ -116,3 +121,20 @@ def delete_news(request, pk):
     else:
         return HttpResponse('<h1>403 Forbidden</h1>')
 
+
+def add_to_favorites(request, pk):
+    new = get_object_or_404(News, pk=pk)
+    if new.favorites.filter(id=request.user.id).exists():
+        new.favorites.remove(request.user)
+    else:
+        new.favorites.add(request.user)
+    return HttpResponseRedirect(new.get_absolute_url())
+
+
+def favorite_posts_list(request):
+    user = request.user
+    favorite_posts = user.favorites.all()
+    context = {
+        'favorite_posts' : favorite_posts,
+    }
+    return render(request, 'favorite_posts_list.html', context)

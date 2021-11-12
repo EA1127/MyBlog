@@ -25,6 +25,12 @@
 					</div>
 					<a href="{% url 'update-news' new.id %}"><i class="fas fa-pencil-alt fa-2x fa-border"></i></a>
 					<a href="{% url 'delete-news' new.id %}"><i class="fas fa-trash-alt fa-2x fa-border"></i></a>
+					{% if is_favorite %}
+					<a href="{% url 'add_to_favorites' new.id %}"><i class="fas fa-star fa-2x fa-border" style="margin-left:80%;"></i></a>
+					{% else %}
+					<a href="{% url 'add_to_favorites' new.id %}"><i class="far fa-star fa-2x fa-border" style="margin-left:80%;"></i></a>
+					{% endif %}
+
 				</article>
 			</section>
 
@@ -45,7 +51,7 @@
 				<p>{{ comment.body|linebreaks }}</p>
     		</div>
 			{% empty %}
-    		<p>There are no comments yet.</p>
+    		<p style="margin-left:190px;">There are no comments yet.</p>
 			{% endfor %}
 
 
