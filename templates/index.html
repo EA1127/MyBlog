@@ -87,15 +87,15 @@
 		</div>
 	</div>
 
-<div style="padding-left: 350px; padding-right: 350px;">
 	{% for new in news %}
-		<article style="margin-top: 10%;">
-			<h3 style="color: midnightblue;">{{ new }}</h3>
-			<span class="image"><img src="{{ new.get_image }}" style="width: 605px; height: 400px; margin-left:100%;" alt=""/></span>
-			<p>{{ new.content|truncatewords:30 }}</p>
-			<a href="{% url 'detail' new.id %}" class="button">More</a>
-		</article>
-	{% endfor %}
+<div class="card" style="padding-left: 350px; padding-right: 350px;">
+	<article class="card-body" style="margin-top: 10%;">
+		<span class="image"><img src="{{ new.get_image }}" style="width: 605px; height: 400px; margin-left:100%;" alt=""/></span>
+		<h3 style="color: midnightblue;">{{ new }}</h3>
+		<p>{{ new.content|truncatewords:30 }}</p>
+		<a style="margin-left: 84%;" href="{% url 'detail' new.id %}" class="button">More</a>
+	</article>
 </div>
+	{% endfor %}
 
 {% endblock %}
