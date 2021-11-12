@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.views.generic import ListView
 
-from .forms import NewsForm, ImageForm
+from .forms import NewsForm, ImageForm, CommentForm
 from .models import *
 
 
@@ -57,6 +57,15 @@ def news_detail(request, pk):
     new = get_object_or_404(News, pk=pk)
     image = new.get_image
     images = new.images.exclude(id=image.id)
+    comments = new.comments.filter(active=True)
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = new
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
     return render(request, 'news_detail.html', locals())
 
 
