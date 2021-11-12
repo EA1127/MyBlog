@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django import forms
 
-from .models import News, Image
+from .models import News, Image, Comment
 
 
 class NewsForm(forms.ModelForm):
@@ -21,3 +21,8 @@ class ImageForm(forms.ModelForm):
         # fields = '__all__'
         fields = ('image', )
 
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('name', 'email', 'body')

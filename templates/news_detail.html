@@ -27,6 +27,40 @@
 					<a href="{% url 'delete-news' new.id %}"><i class="fas fa-trash-alt fa-2x fa-border"></i></a>
 				</article>
 			</section>
+
+
+			{% with comments.count as total_comments %}
+    	<h2 style="margin-top:25px; margin-left:190px; text-decoration: underline;">
+        {{ total_comments }} comment{{ total_comments|pluralize }}
+    	</h2>
+			{% endwith %}
+
+
+			{% for comment in comments %}
+    		<div class="comment" style="margin-left:100px;margin-right:300px;background-color:linen">
+        	<p class="info" style="font-weight:bold;margin-left:20px;">
+            Comment {{ forloop.counter }} by {{ comment.name }}, posted on
+            {{ comment.created }}
+        	</p>
+				<p>{{ comment.body|linebreaks }}</p>
+    		</div>
+			{% empty %}
+    		<p>There are no comments yet.</p>
+			{% endfor %}
+
+
+
+
+		{% if new_comment %}
+    <h2>Your comment has been added.</h2>
+		{% else %}
+    <h2 style="margin-left:200px;margin-top:60px;">Add a new comment</h2>
+    <form action="." method="post" style="margin-left:200px;margin-right:200px;">
+        {{ comment_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Add comment"></p>
+    </form>
+{% endif %}
 		</div>
 	</div>
 
