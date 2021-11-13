@@ -3,69 +3,74 @@
 {% block content %}
 
 <!-- Main -->
-	<div id="main" style="background-color: aliceblue; padding-top: 20px;">
-		<div class="inner">
+<div id="main" style="background-color: aliceblue; padding-top: 20px;">
+	<div class="inner">
+		<header>
+			<h1 style="color:darkslateblue;">{{ new.title }}</h1>
+		</header>
+		<span>
+			<img src="{{ new.get_image }}" style="width: 745px; height: auto;" alt="" />
+		</span>
+		<section>
+			<article>
+				{% for image in images %}
+				<p><img src="{{ image }}" class="img-thumbnail" style="width: 605px; height: 400px; margin-left: 55%;" alt="" /></p>
+				{% endfor %}
+				<h2>{{new.category.name}}</h2>
+				<div class="content">
+					<p>{{ new.created }}</p>
+					<p>{{ new.user }}</p>
+					<p>{{ new.content }}</p>
+				</div>
+				<a href="{% url 'update-news' new.id %}"><i class="fas fa-pencil-alt fa-2x fa-border"></i></a>
+				<a href="{% url 'delete-news' new.id %}"><i class="fas fa-trash-alt fa-2x fa-border"></i></a>
+				{% if is_favorite %}
+				<a href="{% url 'add_to_favorites' new.id %}"><i class="fas fa-star fa-2x fa-border" style="margin-left:80%;"></i></a>
+				{% else %}
+				<a href="{% url 'add_to_favorites' new.id %}"><i class="far fa-star fa-2x fa-border" style="margin-left:80%;"></i></a>
+				{% endif %}
+			</article>
+		</section>
 
-			<header>
-				<h1 style="color:darkslateblue;">{{ new.title }}</h1>
-			</header>
-			<span>
-				<img src="{{ new.get_image }}" style="width: 745px; height: auto;" alt="" />
-			</span>
-			<section>
-				<article>
-					{% for image in images %}
-					<p><img src="{{ image }}" class="img-thumbnail" style="width: 605px; height: 400px; margin-left: 55%;" alt="" /></p>
-					{% endfor %}
-					<h2>{{new.category.name}}</h2>
-					<div class="content">
-						<p>{{ new.created }}</p>
-						<p>{{ new.user }}</p>
-						<p>{{ new.content }}</p>
-					</div>
-					<a href="{% url 'update-news' new.id %}"><i class="fas fa-pencil-alt fa-2x fa-border"></i></a>
-					<a href="{% url 'delete-news' new.id %}"><i class="fas fa-trash-alt fa-2x fa-border"></i></a>
-					{% if is_favorite %}
-					<a href="{% url 'add_to_favorites' new.id %}"><i class="fas fa-star fa-2x fa-border" style="margin-left:80%;"></i></a>
-					{% else %}
-					<a href="{% url 'add_to_favorites' new.id %}"><i class="far fa-star fa-2x fa-border" style="margin-left:80%;"></i></a>
-					{% endif %}
-
-				</article>
-			</section>
-
-
-			{% with comments.count as total_comments %}
-    	<h2 style="margin-top:25px; margin-left:190px; text-decoration: underline;">
-        {{ total_comments }} comment{{ total_comments|pluralize }}:
-    	</h2>
-			{% endwith %}
+		{% with comments.count as total_comments %}
+			<h2 style="margin-top:25px; margin-left:190px; text-decoration: underline;">
+			{{ total_comments }} comment{{ total_comments|pluralize }}:
+			</h2>
+		{% endwith %}
 
 
-			{% for comment in comments %}
-<!--    		<div class="comment" style="margin-left:100px;margin-right:300px;background-color:linen">-->
-			<ul class="list-group list-group-flush">
-        	<li class="list-group-item"><p class="info" style="font-weight:bold;margin-left:20px;margin-top:10px;margin-bottom:10px;">
-            Comment {{ forloop.counter }} by {{ comment.name }}, posted on
-            {{ comment.created }}
-        	</p></li>
-				<li class="list-group-item"><p style="margin-left:5%">{{ comment.body|linebreaks }}</p></li>
-<!--    		</div>-->
-			{% empty %}
-    		<p style="margin-left:190px;">There are no comments yet.</p>
-			{% endfor %}
+		{% for comment in comments %}
+		<!--<div class="comment" style="margin-left:100px;margin-right:300px;background-color:linen">-->
+		<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+			<p class="info" style="font-weight:bold;margin-left:20px;margin-top:10px;margin-bottom:10px;">
+			Comment {{ forloop.counter }} by {{ comment.name }}, posted on
+			{{ comment.created }}
+			</p>
+		</li>
+		<li class="list-group-item">
+			<p style="margin-left:5%">{{ comment.body|linebreaks }}</p>
+		</li>
+		</ul>
+		<!--</div>-->
+		{% empty %}
+			<p style="margin-left:190px;">There are no comments yet.</p>
+		{% endfor %}
 
 		{% if new_comment %}
-    <h2>Your comment has been added.</h2>
+			<h2>Your comment has been added.</h2>
 		{% else %}
-    <h2 style="margin-left:200px;margin-top:60px;">Add a new comment</h2>
-    <form action="." method="post" style="margin-left:200px;margin-right:200px;">
-        {{ comment_form.as_p }}
-        {% csrf_token %}
-        <p><input type="submit" value="Add comment"></p>
-    </form>
-{% endif %}
-		</div>
+			<h2 style="margin-left:200px;margin-top:60px;">Add a new comment</h2>
+			<form action="." method="post" style="margin-left:200px;margin-right:200px;">
+			{{ comment_form.as_p }}
+			{% csrf_token %}
+			<p><input type="submit" value="Add comment"></p>
+			</form>
+		{% endif %}
 	</div>
+</div>
+
+
+
 
 {% endblock %}

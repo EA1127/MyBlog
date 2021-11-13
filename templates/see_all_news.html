@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- For Pagination -->
+
+	<div id="main" style="background-color: aliceblue; padding-top: 20px;">
+		<div class="inner">
+
+			{% for new in page_obj %}
+			<div style="margin: 0%;">
+			<div class="card" style="display: flex; margin: 5% 0%; border: 2px solid cyan; width: auto;">
+				<div class="item" style="box-sizing: border-box;">
+					<article class="card-body" style="margin-top: 10%">
+						<span class="image"><img src="{{ new.get_image }}" style="margin-left: 20%; width: 605px; height: 400px;" alt=""/></span>
+						<h3 style="color: midnightblue; padding-left: 10%; padding-right: 10%;">{{ new }}</h3>
+						<p style="padding-left: 10%; padding-right: 10%;">{{ new.content|truncatewords:30 }}</p>
+						<a style="margin-left: 75%;" href="{% url 'detail' new.id %}" class="button">More</a>
+					</article>
+				</div>
+			</div>
+			</div>
+			{% endfor %}
+
+
+			<div class="pagination" style="margin-left: 40%;" aria-label="...">
+				<span class="step-links">
+					{% if page_obj.has_previous %}
+						<a style="font-weight: bold; margin-right: 5%;" href="?page=1">&laquo; First</a>
+						<a style="font-weight: bold; margin-right: 5%;" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+					{% endif %}
+
+					<span style="font-weight: bold; margin-right: 5%; color: blue;" class="current">
+						PAGE {{ page_obj.number }} OF {{ page_obj.paginator.num_pages }}
+					</span>
+
+					{% if page_obj.has_next %}
+						<a style="font-weight: bold; margin-right: 5%;" href="?page={{ page_obj.next_page_number }}">Next</a>
+						<a style="font-weight: bold; margin-right: 5%;" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+					{% endif %}
+				</span>
+			</div>
+
+		</div>
+	</div>
+
+
+{% endblock %}

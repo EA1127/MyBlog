@@ -4,13 +4,17 @@
 <!-- Main -->
 	<div id="main">
 		<div class="inner">
-			<h1 style="color:darkslateblue">{{ category.name }}</h1>
+			<h1 style="color: darkslateblue;">{{ category.name }}</h1>
 			<div style="display: flex; justify-content: space-between">
 				<div style="margin-right: 50px;"><span class="image"><img src="{{ category.image.url }}" style="width: 605px; height: 400px;" alt=""/></span></div>
 			</div>
 			{% if category.get_subcategories %}
 			{% for subcategory in category.get_subcategories %}
-			<h2><a href="{% url 'category' subcategory.slug %}"><li style="font-weight: bold; color: dodgerblue;">{{ subcategory.name }}</li></a></h2>
+			<h2 style="margin-top: 3%">
+				<a href="{% url 'category' subcategory.slug %}">
+					<li style="font-weight: bold; color: dodgerblue;">{{ subcategory.name }}</li>
+				</a>
+			</h2>
 			{% endfor %}
 			{% endif %}
 
@@ -24,6 +28,7 @@
 			</article>
 			{% endfor %}
 			{% endif %}
+
 		</div>
 	</div>
 

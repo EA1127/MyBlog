@@ -1,8 +1,10 @@
 from datetime import timedelta
 
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.forms import modelformset_factory
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.utils import timezone
@@ -13,24 +15,39 @@ from .models import *
 
 
 def index(request):
+    return render(request, 'index.html', {'economy': 'economy',
+                                          'politics': 'politics',
+                                          'fashion': 'fashion',
+                                          'showbusiness': 'showbusiness',
+                                          'itworld': 'itworld',
+                                          'lifehacks': 'lifehacks'})
+
+
+def see_all_news(request):
     news = News.objects.all()
-    return render(request, 'index.html', {'news': news, 'economy': 'economy', 'politics': 'politics', 'fashion': 'fashion', 'showbusiness': 'showbusiness', 'itworld': 'itworld', 'lifehacks': 'lifehacks'})
+    paginator = Paginator(news, 2)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'see_all_news.html', {'page_obj': page_obj})
 
 
 class MainPageView(ListView):
     model = News
     template_name = 'index.html'
     context_object_name = 'news'
-    # paginate_by = 2
+    paginate_by = 3
 
     def get_template_names(self):
         template_name = super(MainPageView, self).get_template_names()
         search = self.request.GET.get('q')
         filter_ = self.request.GET.get('filter')
+
         if search:
             template_name = 'search.html'
         elif filter_:
             template_name = 'fresh.html'
+        else:
+            template_name = 'search.html'
         return template_name
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -43,7 +60,7 @@ class MainPageView(ListView):
             start_date = timezone.now() - timedelta(hours=24)
             context['news'] = News.objects.filter(created__gte=start_date)
         else:
-            context['news'] = News.objects.all()
+            context['news'] = News.objects.none()
         return context
 
 
@@ -74,6 +91,7 @@ def news_detail(request, pk):
     return render(request, 'news_detail.html', locals())
 
 
+@login_required(login_url='login')
 def add_news(request):
     ImageFormSet = modelformset_factory(Image, form=ImageForm, max_num=6)
     if request.method == "POST":
@@ -100,6 +118,7 @@ def update_news(request, pk):
         formset = ImageFormSet(request.POST or None, request.FILES or None, queryset=Image.objects.filter(new=new))
         if news_form.is_valid() and formset.is_valid():
             new = news_form.save()
+
             for form in formset:
                 image = form.save(commit=False)
                 image.new = new
@@ -135,6 +154,6 @@ def favorite_posts_list(request):
     user = request.user
     favorite_posts = user.favorites.all()
     context = {
-        'favorite_posts' : favorite_posts,
+        'favorite_posts': favorite_posts,
     }
     return render(request, 'favorite_posts_list.html', context)
