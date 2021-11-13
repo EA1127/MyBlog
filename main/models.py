@@ -8,7 +8,6 @@ class Category(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to='categories', blank=True, null=True)
     parent = models.ForeignKey('self', related_name='subcategories', null=True, blank=True, on_delete=models.CASCADE)
-    # subcategories для того, чтобы можно было вытащить все подкатегории какой-нибудь категории
 
     def __str__(self):
         if self.parent:
@@ -43,7 +42,7 @@ class News(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='news')
+    image = models.ImageField(upload_to='news', blank=True, null=True)
     new = models.ForeignKey(News, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):

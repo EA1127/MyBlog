@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-<section style="margin-left: 100px; margin-right: 100px; padding-left: 350px; padding-top: 20px; background-color: cornsilk;" id="banner">
-    <div class="content">
-        <header>
-            <h1 style="margin-bottom: 3%;">My Profile</h1>
-            <h2 style="margin-bottom: 0%;">{{ request.user.username }}</h2>
-        </header>
-        <p style="margin-top: 2%; margin-bottom: 0%;">{{ request.user }}</p>
-        <p style="margin-top: 2%; margin-bottom: 0%;">{{ request.user.date_joined }}</p>
-    </div>
-    <span style="margin-top: 2%; margin-bottom: 10%;" class="image object">
-        <img style=" width: 600px; height: auto;" src="{{ request.user.image.url }}" style="#" alt="" />
-    </span>
 
-</section>
+<div id="main" style="background-color: aliceblue; padding-top: 20px;">
+    <div class="inner">
+        <section style="padding-left: 350px; padding-top: 20px; background-color: cornsilk;" id="banner">
+            <div class="content">
+                <header>
+                    <h1 style="margin-bottom: 3%;">My Profile</h1>
+                    <h2 style="margin-bottom: 0%;">{{ request.user.username }}</h2>
+                </header>
+                <p style="margin-top: 2%; margin-bottom: 0%;">{{ request.user }}</p>
+                <p style="margin-top: 2%; margin-bottom: 0%;">{{ request.user.date_joined }}</p>
+            </div>
+            <span style="margin-top: 2%; margin-bottom: 10%;" class="image object">
+                <img style=" width: 600px; height: auto;" src="{{ request.user.image.url }}" style="#" alt="" />
+            </span>
+
+        </section>
+    </div>
+</div>
+
 {% endblock %}

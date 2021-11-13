@@ -47,12 +47,16 @@
 					</header>
 
 				<!-- Search -->
-				  <div style="margin-left: 17%; margin-right: 17%;">
+				  <div class="inner" style="margin-left: 25%; margin-right: 25%;">
 						<form method="get" action="{% url 'search' %}">
 						  	<input type="text" name="q" id="query" placeholder="Search" />
 						</form>
 				  </div>
 
+				<!-- See all news -->
+				  <div class="inner" style="margin: 0% 25%; padding-bottom: 2%;">
+						<a style="color: dodgerblue;" href="{% url 'see_all_news' %}">See all news</a>
+				  </div>
 
 				<!-- Menu -->
 					<nav id="menu">

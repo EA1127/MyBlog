@@ -1,15 +1,24 @@
 {% extends 'base.html'%}
 {% block content %}
 
-{% for new in favorite_posts %}
-    <article style="margin-top: 3%;margin-left:150px;margin-right:190px;">
-        <h3 style="color: midnightblue;">{{ new }}</h3>
-        <span class="image" ><img src="{{ new.get_image }}" style="width: 605px; height: 400px; margin-left:90%;" alt=""/></span>
-        <p>{{ new.content|truncatewords:50 }}</p>
-        <a href="{% url 'detail' new.id %}" class="button">More</a>
-    </article>
-{% empty %}
-<h2 style="margin-left:150px">No favorite posts yet...</h2>
-{% endfor %}
+<div id="main" style="background-color: aliceblue; padding-top: 20px;">
+    <div class="inner">
+        <h1>Favorite posts:</h1>
+        <div style="padding-left: 350px; padding-right: 350px;">
+
+        {% for new in favorite_posts %}
+            <article style="margin-top: 10%;">
+                <h3 style="color: midnightblue;">{{ new }}</h3>
+                <span class="image" ><img src="{{ new.get_image }}" style="width: 605px; height: 400px; margin-left:100%;" alt=""/></span>
+                <p>{{ new.content|truncatewords:50 }}</p>
+                <a href="{% url 'detail' new.id %}" class="button">More</a>
+            </article>
+        {% empty %}
+        <h2>No favorite posts yet...</h2>
+        {% endfor %}
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}

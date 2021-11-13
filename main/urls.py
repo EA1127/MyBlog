@@ -3,8 +3,9 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('home/', index, name='home'),
-    path('', MainPageView.as_view(), name='search'),
+    path('', index, name='home'),
+    path('search', MainPageView.as_view(), name='search'),
+    path('see_all_news/', see_all_news, name='see_all_news'),
     path('category/<str:slug>/', blog_category_detail, name='category'),
     path('news-detail/<int:pk>/', news_detail, name='detail'),
     path('add-news/', add_news, name='add-news'),
@@ -12,5 +13,6 @@ urlpatterns = [
     path('delete-news/<int:pk>/', delete_news, name='delete-news'),
     path('add_to_favorites/<int:pk>/', add_to_favorites, name='add_to_favorites'),
     path('favorite_posts/', favorite_posts_list, name='favorite_posts_list'),
+
 ]
 
