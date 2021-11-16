@@ -1,7 +1,19 @@
 from django import forms
+from django.conf import settings
 from django.core.mail import send_mail
 
 from user.models import User
+
+
+def send_welcome_email(email):
+    message = f'You were successfully registered at MyBlog! Thanks for the interest in our site!'
+    send_mail(
+        'Registration at MyBlog',
+        message,
+        'myblogadmin@gmail.com',
+        [email],
+        fail_silently=False
+    )
 
 
 class RegistrationForm(forms.ModelForm):
@@ -34,4 +46,5 @@ class RegistrationForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = User.objects.create_user(**self.cleaned_data)
+        send_welcome_email(user.email)
         return user
