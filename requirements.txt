@@ -3,3 +3,4 @@ psycopg2-binary
 Pillow
 python-decouple
 django-shopping-cart
+django-ckeditor
